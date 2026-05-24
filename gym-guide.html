@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Техника — Домашний зал</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700&family=IBM+Plex+Mono:wght@400;700&family=Barlow:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink:#1a1612;
+  --paper:#f2ede6;
+  --cream:#e8e2d8;
+  --yellow:#e8c84a;
+  --red:#c0392b;
+  --gray:#8a8077;
+  --lightgray:#cec8be;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Barlow',sans-serif;
+  font-weight:400;
+  font-size:15px;
+  line-height:1.6;
+}
+
+/* — верхняя полоса — */
+.topbar{
+  background:var(--ink);
+  color:var(--yellow);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:7px 5vw;
+  display:flex;
+  justify-content:space-between;
+}
+
+/* — шапка — */
+.masthead{
+  padding:40px 5vw 0;
+  border-bottom:3px solid var(--ink);
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:20px;
+  padding-bottom:20px;
+}
+.masthead-left{}
+.issue-tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-bottom:6px;
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(38px,7vw,88px);
+  font-weight:900;
+  line-height:.92;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-bottom:0;
+}
+h1 em{
+  font-style:italic;
+  color:var(--red);
+}
+.masthead-desc{
+  font-family:'Barlow',sans-serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--gray);
+  margin-top:10px;
+  max-width:380px;
+  line-height:1.7;
+}
+.equip-col{
+  text-align:right;
+  padding-bottom:4px;
+}
+.equip-item{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--gray);
+  line-height:2.1;
+  display:block;
+}
+.equip-item b{color:var(--ink)}
+
+/* — навигация — */
+.contents{
+  border-bottom:1px solid var(--lightgray);
+  padding:0 5vw;
+  display:flex;
+  gap:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:var(--paper);
+}
+.contents::-webkit-scrollbar{display:none}
+.contents a{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--gray);
+  padding:12px 16px 10px;
+  border-right:1px solid var(--lightgray);
+  white-space:nowrap;
+  text-decoration:none;
+  transition:color .15s,background .15s;
+}
+.contents a:first-child{border-left:1px solid var(--lightgray)}
+.contents a:hover{color:var(--ink);background:var(--cream)}
+
+/* — секции — */
+.sec{
+  padding:60px 5vw;
+  border-bottom:3px solid var(--ink);
+}
+.sec:nth-child(odd){background:var(--paper)}
+.sec:nth-child(even){background:var(--cream)}
+
+.sec-intro{
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:40px;
+  margin-bottom:50px;
+  align-items:end;
+  border-bottom:1px solid var(--lightgray);
+  padding-bottom:30px;
+}
+@media(max-width:600px){.sec-intro{grid-template-columns:1fr;gap:10px}}
+
+.sec-num{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(60px,9vw,110px);
+  font-weight:400;
+  color:var(--lightgray);
+  line-height:1;
+}
+.sec-right h2{
+  font-family:'Playfair Display',serif;
+  font-weight:900;
+  font-size:clamp(26px,4vw,48px);
+  line-height:1;
+  letter-spacing:-.02em;
+  margin-bottom:6px;
+}
+.sec-right h2 mark{
+  background:var(--yellow);
+  padding:0 4px;
+  font-style:normal;
+}
+.sec-sub{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--gray);
+}
+
+/* — упражнения — */
+.exercises{display:flex;flex-direction:column;gap:0}
+
+.ex{border-top:1px solid var(--lightgray)}
+.ex:last-child{border-bottom:1px solid var(--lightgray)}
+
+.ex-trigger{
+  width:100%;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:18px 0;
+  display:grid;
+  grid-template-columns:48px 1fr 28px;
+  gap:16px;
+  align-items:start;
+  text-align:left;
+}
+.ex-trigger:hover .ex-title{text-decoration:underline;text-decoration-color:var(--yellow);text-underline-offset:3px}
+
+.ex-n{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:28px;
+  color:var(--lightgray);
+  line-height:1.1;
+  padding-top:2px;
+}
+.ex-head{}
+.ex-title{
+  font-family:'Playfair Display',serif;
+  font-weight:900;
+  font-size:clamp(16px,2vw,21px);
+  line-height:1.15;
+  color:var(--ink);
+  margin-bottom:5px;
+  letter-spacing:-.01em;
+}
+.ex-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  border:1px solid var(--lightgray);
+  padding:2px 8px;
+  color:var(--gray);
+}
+.chip.hi{border-color:var(--ink);color:var(--ink);background:var(--yellow)}
+
+.ex-arrow{
+  font-size:20px;
+  color:var(--lightgray);
+  line-height:1;
+  transition:transform .25s;
+  margin-top:4px;
+  font-family:'Barlow',sans-serif;
+}
+.ex.open .ex-arrow{transform:rotate(45deg);color:var(--ink)}
+
+/* — тело упражнения — */
+.ex-body{display:none;padding:0 0 28px 64px}
+@media(max-width:600px){.ex-body{padding-left:0}}
+.ex.open .ex-body{display:block}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media(max-width:680px){.cols{grid-template-columns:1fr}}
+
+.col-head{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gray);
+  border-bottom:1px solid var(--lightgray);
+  padding-bottom:6px;
+  margin-bottom:14px;
+}
+
+/* шаги */
+.steps{list-style:none}
+.step{
+  display:grid;
+  grid-template-columns:22px 1fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+.sn{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--lightgray);
+  padding-top:1px;
+}
+.st{font-size:13.5px;line-height:1.68;color:var(--ink)}
+.st strong{font-weight:600}
+
+/* мышцы */
+.mrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mname{font-size:12px;min-width:115px;color:var(--ink)}
+.mtrack{flex:1;height:3px;background:var(--lightgray)}
+.mfill{height:100%;background:var(--ink)}
+.mtype{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--gray);
+  flex-shrink:0;
+  min-width:55px;
+  text-align:right;
+}
+
+/* ошибки */
+.errs{
+  margin-top:20px;
+  border-left:3px solid var(--red);
+  padding-left:14px;
+}
+.errs-h{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:10px;
+}
+.err{
+  font-size:12.5px;
+  line-height:1.65;
+  color:var(--gray);
+  margin-bottom:7px;
+  padding-left:12px;
+  position:relative;
+}
+.err::before{content:'—';position:absolute;left:0;color:var(--red)}
+
+/* совет */
+.tip{
+  margin-top:18px;
+  background:var(--yellow);
+  padding:10px 14px;
+  font-size:12.5px;
+  line-height:1.65;
+  font-style:italic;
+}
+.tip b{font-style:normal;font-weight:600}
+
+/* варианты */
+.vars{display:flex;flex-direction:column;gap:8px}
+.var{
+  padding:9px 12px;
+  border:1px solid var(--lightgray);
+  border-left:3px solid var(--ink);
+}
+.var-t{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:3px;
+  color:var(--ink);
+}
+.var-d{font-size:12px;line-height:1.6;color:var(--gray)}
+
+/* разделитель категории */
+.cat-sep{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:11px;
+  color:var(--gray);
+  margin:24px 0 8px;
+  padding-bottom:4px;
+  border-bottom:1px solid var(--lightgray);
+}
+
+/* footer */
+footer{
+  background:var(--ink);
+  color:var(--paper);
+  padding:36px 5vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.ft-l{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(20px,3vw,32px);
+  line-height:1.1;
+}
+.ft-l strong{font-style:normal;font-weight:900}
+.ft-r{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--gray);
+  text-align:right;
+  line-height:2;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Домашний зал — справочник техники</span>
+  <span>DHFitLife · EZ-штанга · гантели · тело</span>
+</div>
+
+<header class="masthead">
+  <div class="masthead-left">
+    <div class="issue-tag">Полный справочник упражнений</div>
+    <h1>Техника.<br><em>Не вес.</em></h1>
+    <p class="masthead-desc">Разбор каждого движения: как правильно, почему именно так, и где ты чаще всего ошибаешься.</p>
+  </div>
+  <div class="equip-col">
+    <span class="equip-item"><b>01</b> Турник DHFitLife</span>
+    <span class="equip-item"><b>02</b> Брусья DHFitLife</span>
+    <span class="equip-item"><b>03</b> EZ-штанга</span>
+    <span class="equip-item"><b>04</b> Разборные гантели</span>
+    <span class="equip-item"><b>05</b> Собственный вес</span>
+  </div>
+</header>
+
+<nav class="contents">
+  <a href="#pullup">Турник</a>
+  <a href="#bars">Брусья</a>
+  <a href="#core">Кор</a>
+  <a href="#barbell">EZ-штанга</a>
+  <a href="#dumbbells">Гантели</a>
+  <a href="#bw">Без железа</a>
+</nav>
+
+
+<!-- ═══ ТУРНИК ═══ -->
+<section class="sec" id="pullup">
+  <div class="sec-intro">
+    <div class="sec-num">01</div>
+    <div class="sec-right">
+      <h2><mark>Турник</mark></h2>
+      <div class="sec-sub">подтягивания · вис · горизонтальные тяги</div>
+    </div>
+  </div>
+
+  <div class="exercises">
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">01</span>
+        <span class="ex-head">
+          <span class="ex-title">Прямой хват — Pull-up</span>
+          <span class="ex-chips">
+            <span class="chip hi">Спина</span>
+            <span class="chip hi">Бицепс</span>
+            <span class="chip">Базовое</span>
+            <span class="chip">Хват сверху</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника — пошагово</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Хват:</strong> ладони от себя, чуть шире плеч. Большой палец оборачивается вокруг грифа — не лежит сверху.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Вис:</strong> руки прямые, плечи чуть подняты к ушам. Это защищает суставы, не расслабляй полностью.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Главное перед тягой:</strong> опусти лопатки вниз и назад — без сгибания локтей тело поднимется на 3–5 см. Вот так запускаются широчайшие.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st"><strong>Тяга:</strong> локти вниз и назад — как в задние карманы. Грудь идёт к грифу, а не лоб.</span></li>
+              <li class="step"><span class="sn">5.</span><span class="st"><strong>Верх:</strong> подбородок над перекладиной, пауза полсекунды, сожми спину.</span></li>
+              <li class="step"><span class="sn">6.</span><span class="st"><strong>Спуск — медленно, 3 секунды.</strong> Это половина работы. Полностью выпрями руки внизу.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Частые ошибки</div>
+              <div class="err">Подбородок тянется вперёд вместо груди к грифу — нагрузка уходит в шею.</div>
+              <div class="err">Неполная амплитуда — бросок вниз и недотяг наверх. 3 чистых лучше 10 кривых.</div>
+              <div class="err">Раскачка корпуса. Меньше повторений, но без инерции.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Широчайшие</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Бицепс</span><div class="mtrack"><div class="mfill" style="width:76%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Задняя дельта</span><div class="mtrack"><div class="mfill" style="width:55%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Ромбовидные</span><div class="mtrack"><div class="mfill" style="width:60%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Кор (стаб.)</span><div class="mtrack"><div class="mfill" style="width:30%"></div></div><span class="mtype">стаб.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">02</span>
+        <span class="ex-head">
+          <span class="ex-title">Обратный хват — Chin-up</span>
+          <span class="ex-chips">
+            <span class="chip hi">Бицепс</span>
+            <span class="chip hi">Спина</span>
+            <span class="chip">Хват снизу</span>
+            <span class="chip">Легче для новичков</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Хват:</strong> ладони на себя, ширина — плечи или чуть уже.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Локти идут вперёд при тяге — это главное отличие от прямого. Бицепс работает активнее, поэтому субъективно легче.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">В верхней точке задержись на 1–2 секунды — почувствуй одновременное сокращение бицепса и спины.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Спуск — 2–3 секунды, полное разгибание внизу.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Мышцы (vs прямой хват)</div>
+            <div class="mrow"><span class="mname">Бицепс</span><div class="mtrack"><div class="mfill" style="width:95%"></div></div><span class="mtype">+++ больше</span></div>
+            <div class="mrow"><span class="mname">Широчайшие</span><div class="mtrack"><div class="mfill" style="width:80%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Задняя дельта</span><div class="mtrack"><div class="mfill" style="width:40%"></div></div><span class="mtype">вторичная</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">03</span>
+        <span class="ex-head">
+          <span class="ex-title">Австралийские подтягивания (горизонтальные)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Средняя спина</span>
+            <span class="chip hi">Задняя дельта</span>
+            <span class="chip">Для начинающих</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>На DHFitLife:</strong> нижние горизонтальные ручки или гриф. Ляг под них с опорой на пятки — тело как доска под углом.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Ягодицы и пресс напряжены постоянно — без провисания.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Тяни грудь к грифу, лопатки назад и вниз. Локти вдоль корпуса, не в стороны.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st"><strong>Прогрессия:</strong> ноги дальше — тяжелее. Ноги согнуты — легче. Готовит к вертикальным подтягиваниям.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Ромбовидные</span><div class="mtrack"><div class="mfill" style="width:90%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Задняя дельта</span><div class="mtrack"><div class="mfill" style="width:85%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Трапеция (сред.)</span><div class="mtrack"><div class="mfill" style="width:80%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Широчайшие</span><div class="mtrack"><div class="mfill" style="width:50%"></div></div><span class="mtype">вторичная</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">04</span>
+        <span class="ex-head">
+          <span class="ex-title">Вис — активный и пассивный</span>
+          <span class="ex-chips">
+            <span class="chip">Лопатки</span>
+            <span class="chip">Хват</span>
+            <span class="chip">Позвоночник</span>
+            <span class="chip">Ежедневно</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Пассивный вис</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">→</span><span class="st">Просто висишь, плечи расслаблены. Позвоночник вытягивается под весом тела. 20–60 секунд каждый день.</span></li>
+            </ul>
+            <div class="col-head" style="margin-top:16px">Активный вис (Scapular Pull)</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Висишь, руки прямые.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Без сгибания локтей</strong> опускаешь лопатки вниз — тело поднимается на 3–5 см.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">8–12 повторений. Тренирует стартовую фазу подтягивания.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Зачем это нужно</div>
+            <p style="font-size:13px;line-height:1.75;color:var(--gray)">Большинство людей не умеют включать лопатки перед подтягиванием. Именно поэтому бицепс забивается раньше спины.<br><br>Делай 3 подхода виса до отказа в конце каждой тренировки — через месяц хват станет заметно сильнее.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ БРУСЬЯ ═══ -->
+<section class="sec" id="bars">
+  <div class="sec-intro">
+    <div class="sec-num">02</div>
+    <div class="sec-right">
+      <h2><mark>Брусья</mark></h2>
+      <div class="sec-sub">отжимания · трицепс · грудь · подъём ног</div>
+    </div>
+  </div>
+
+  <div class="exercises">
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">01</span>
+        <span class="ex-head">
+          <span class="ex-title">Dips — два совершенно разных упражнения</span>
+          <span class="ex-chips">
+            <span class="chip hi">Грудь</span>
+            <span class="chip hi">Трицепс</span>
+            <span class="chip">Зависит от наклона</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Акцент — грудь (наклон вперёд)</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Запрыгни в упор, руки прямые.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Наклони корпус вперёд 15–30°.</strong> Это ключ — без наклона грудь почти не работает.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Медленно вниз (3 сек), локти чуть в стороны и назад. Стоп когда плечо параллельно полу.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Выжимай вверх — представь, что сводишь грудь посередине.</span></li>
+            </ul>
+            <div class="col-head" style="margin-top:16px">Акцент — трицепс (корпус вертикально)</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Корпус строго вертикален.</strong> Никакого наклона.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Локти идут строго назад вдоль тела — не в стороны.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">До 90° в локте. Наверху — выпрями руки, почувствуй трицепс, 0.5 сек паузы.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Ошибки</div>
+            <div class="errs">
+              <div class="errs-h">Критично</div>
+              <div class="err">Слишком глубоко при грудном варианте — риск вращательной манжеты. Плечо параллельно полу — стоп.</div>
+              <div class="err">Раскачка корпуса — инерция вместо мышц. Снизь повторения.</div>
+              <div class="err">Взгляд вниз — меняет положение плеч. Смотри прямо.</div>
+            </div>
+            <div class="tip"><b>DHFitLife:</b> горизонтальные ручки — твои брусья. Убедись что зафиксированы перед нагрузкой. Шатается — поставь у стены.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">02</span>
+        <span class="ex-head">
+          <span class="ex-title">Обратные отжимания от ручек</span>
+          <span class="ex-chips">
+            <span class="chip hi">Трицепс</span>
+            <span class="chip">Для начинающих</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Сядь спиной к нижним ручкам, руки сзади. Пальцы смотрят вперёд.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Локти уходят <strong>строго назад</strong>, не в стороны. До 90°.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Держи спину близко к ручкам — иначе нагрузится плечо, не трицепс.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Прогрессия</div>
+            <div class="vars">
+              <div class="var"><div class="var-t">Легче</div><div class="var-d">Ноги согнуты — ~50% веса тела.</div></div>
+              <div class="var"><div class="var-t">Тяжелее</div><div class="var-d">Ноги прямые — ~70%.</div></div>
+              <div class="var"><div class="var-t">Максимум</div><div class="var-d">Пятки на возвышении — почти весь вес.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">03</span>
+        <span class="ex-head">
+          <span class="ex-title">Подъём ног в упоре на брусьях</span>
+          <span class="ex-chips">
+            <span class="chip hi">Пресс</span>
+            <span class="chip">Сгибатели бедра</span>
+            <span class="chip">4 уровня</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Упор на руках. Лопатки вниз, плечи не у ушей.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Поднимай ноги без раскачки. Пауза 1 сек наверху.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Медленно опускай 2–3 сек — не бросай вниз. Выдох на подъёме.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Уровни</div>
+            <div class="vars">
+              <div class="var"><div class="var-t">1 — колени к груди</div><div class="var-d">Согнутые ноги, меньше рычаг.</div></div>
+              <div class="var"><div class="var-t">2 — ноги под 45°</div><div class="var-d">Полупрямые.</div></div>
+              <div class="var"><div class="var-t">3 — уголок (горизонт)</div><div class="var-d">Прямые ноги параллельно полу.</div></div>
+              <div class="var"><div class="var-t">4 — выше горизонта</div><div class="var-d">До касания ног турника.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ КОР ═══ -->
+<section class="sec" id="core">
+  <div class="sec-intro">
+    <div class="sec-num">03</div>
+    <div class="sec-right">
+      <h2><mark>Кор</mark></h2>
+      <div class="sec-sub">планка · скручивания · ножницы · подъём ног</div>
+    </div>
+  </div>
+
+  <div class="exercises">
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">01</span>
+        <span class="ex-head">
+          <span class="ex-title">Планка — все варианты</span>
+          <span class="ex-chips">
+            <span class="chip hi">Кор</span>
+            <span class="chip hi">Поясница</span>
+            <span class="chip">Фундамент</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Базовая техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Локти строго под плечами.</strong> Не дальше, не ближе.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Тело — одна прямая линия от пяток до макушки. Ни провисания в пояснице, ни горба ягодицами.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Сожми ягодицы максимально</strong> — это автоматически выравнивает таз.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Пресс: втяни живот как перед ударом. Держи всё время.</span></li>
+              <li class="step"><span class="sn">5.</span><span class="st">Дыши нормально. Если не можешь — слишком напряжён или стоишь слишком долго.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Главная ошибка</div>
+              <div class="err">Провисание в пояснице — компрессия позвонков. Сожми ягодицы сильнее или сократи время.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Варианты</div>
+            <div class="vars">
+              <div class="var"><div class="var-t">На предплечьях</div><div class="var-d">Классика. Легче держать долго.</div></div>
+              <div class="var"><div class="var-t">На прямых руках</div><div class="var-d">Как верхняя точка отжимания. Больше нагрузка на плечи.</div></div>
+              <div class="var"><div class="var-t">Боковая</div><div class="var-d">Одна рука — косые мышцы. Бёдра не провисают.</div></div>
+              <div class="var"><div class="var-t">Альпинист</div><div class="var-d">Планка + колено к груди поочерёдно быстро. Кардио + кор.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">02</span>
+        <span class="ex-head">
+          <span class="ex-title">Скручивания (кранчи) + варианты</span>
+          <span class="ex-chips">
+            <span class="chip hi">Верхний пресс</span>
+            <span class="chip hi">Косые</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Лёжа, ноги согнуты. <strong>Поясница прижата к полу — всегда.</strong></span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Руки — пальцы касаются висков. Не тяни за голову!</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Скручивай только грудную клетку к коленям. Маленькая амплитуда, поясница не отрывается.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Выдох на подъёме, задержи 1 сек.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Ошибки</div>
+              <div class="err">Отрыв поясницы от пола — это уже подъём корпуса, другое упражнение.</div>
+              <div class="err">Тяга за шею — вся нагрузка уходит в шею.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Лучшие варианты</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">→</span><span class="st"><strong>Велосипед:</strong> локоть к противоположному колену. Лучшее для косых.</span></li>
+              <li class="step"><span class="sn">→</span><span class="st"><strong>Обратные:</strong> ноги вверх, таз отрывается к плечам. Нижний пресс.</span></li>
+              <li class="step"><span class="sn">→</span><span class="st"><strong>V-up:</strong> одновременно ноги и корпус — тело в V. Весь пресс.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">03</span>
+        <span class="ex-head">
+          <span class="ex-title">Подъём ног лёжа / Ножницы</span>
+          <span class="ex-chips">
+            <span class="chip hi">Нижний пресс</span>
+            <span class="chip">Сгибатели бедра</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Подъём прямых ног</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Руки под ягодицами или вдоль тела. Ноги прямые.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Подними до 90°. Медленно опускай 3–4 сек, не касаясь пола.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Поясница прижата всегда.</strong> Отрывается — сгибай ноги или подними точку остановки.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Ножницы</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Ноги под 30–45° от пола, прямые. Поясница прижата.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Скрещивай поочерёдно — непрерывное движение.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Чем ниже угол — тем тяжелее. Новичкам держи выше 45°.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ EZ-ШТАНГА ═══ -->
+<section class="sec" id="barbell">
+  <div class="sec-intro">
+    <div class="sec-num">04</div>
+    <div class="sec-right">
+      <h2><mark>EZ-штанга</mark></h2>
+      <div class="sec-sub">бицепс · трицепс · спина · плечи · ноги</div>
+    </div>
+  </div>
+
+  <div class="exercises">
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">01</span>
+        <span class="ex-head">
+          <span class="ex-title">Сгибание на бицепс</span>
+          <span class="ex-chips">
+            <span class="chip hi">Бицепс</span>
+            <span class="chip">Предплечье</span>
+            <span class="chip">Мягче для запястий</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Хват за изогнутые части</strong> — не за прямую середину. Ладони вверх-вперёд (полусупинация). Это и снимает стресс с запястий.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Локти прижаты к корпусу.</strong> Не двигаются вперёд при подъёме. Это главное правило.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Работают только предплечья. В верхней точке сожми бицепс на 1 сек.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st"><strong>Опускание 3–4 секунды.</strong> Это 50% тренировки. Не бросай.</span></li>
+              <li class="step"><span class="sn">5.</span><span class="st">Полное разгибание в нижней точке — всегда.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Ошибки</div>
+              <div class="err">Локти уходят вперёд — подключаются плечи, нагрузка уходит с бицепса.</div>
+              <div class="err">Читинг корпусом (отклонение назад) — обман себя. Снизь вес.</div>
+              <div class="err">Быстрый опуск — ты выбрасываешь половину тренировки.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Бицепс (длин. гол.)</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Бицепс (кор. гол.)</span><div class="mtrack"><div class="mfill" style="width:90%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Плечевая</span><div class="mtrack"><div class="mfill" style="width:70%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Предплечья</span><div class="mtrack"><div class="mfill" style="width:45%"></div></div><span class="mtype">стаб.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">02</span>
+        <span class="ex-head">
+          <span class="ex-title">Французский жим (трицепс лёжа)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Трицепс</span>
+            <span class="chip">Длинная головка</span>
+            <span class="chip">Лёжа</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Лёжа на полу или кровати. Штанга над грудью на прямых руках. Хват — узкий, за изогнутые части EZ.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Локти зафиксированы — в потолок.</strong> Не расходятся в стороны при движении.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Сгибай только предплечья. Штанга к лбу или чуть за голову — для длинной головки.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Разгибай силой трицепса. Наверху не запирай до щелчка.</span></li>
+              <li class="step"><span class="sn">5.</span><span class="st"><strong>Осторожно:</strong> штанга над лицом. Начинай с лёгкого веса.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Трицепс (длинная)</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Трицепс (медиальн.)</span><div class="mtrack"><div class="mfill" style="width:70%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Трицепс (латеральн.)</span><div class="mtrack"><div class="mfill" style="width:60%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="tip">EZ-гриф лучше прямого для этого упражнения — изгиб снимает нагрузку с запястий и локтей.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">03</span>
+        <span class="ex-head">
+          <span class="ex-title">Тяга в наклоне (спина)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Широчайшие</span>
+            <span class="chip hi">Ромбовидные</span>
+            <span class="chip">Базовое</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Наклон 45–70°, колени чуть согнуты. <strong>Спина прямая — не горбись.</strong></span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Хват чуть шире плеч, ладони вниз.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Начни со сведения лопаток</strong> — потом тяни локти назад вдоль корпуса к животу. Не в стороны.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Лопатки сведены и опущены в верхней точке. Пауза 1 сек.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Ошибки</div>
+              <div class="err">Горбатая спина в наклоне — компрессия дисков. Спина ровная даже если придётся снизить вес.</div>
+              <div class="err">Читинг раскачкой — снизь вес.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Широчайшие</span><div class="mtrack"><div class="mfill" style="width:95%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Ромбовидные</span><div class="mtrack"><div class="mfill" style="width:85%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Задняя дельта</span><div class="mtrack"><div class="mfill" style="width:70%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Бицепс</span><div class="mtrack"><div class="mfill" style="width:55%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Поясница (стаб.)</span><div class="mtrack"><div class="mfill" style="width:50%"></div></div><span class="mtype">стаб.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">04</span>
+        <span class="ex-head">
+          <span class="ex-title">Румынская мёртвая тяга</span>
+          <span class="ex-chips">
+            <span class="chip hi">Бицепс бедра</span>
+            <span class="chip hi">Ягодицы</span>
+            <span class="chip">Поясница (стаб.)</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Стоишь прямо, штанга у бёдер. Небольшой сгиб в коленях — <strong>угол коленей не меняется всё движение.</strong></span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Толкай таз назад</strong> — как будто касаешься стены сзади. Корпус наклоняется вперёд. Спина — ровная доска.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Штанга скользит вдоль ног вниз — близко к голеням. Почувствуй растяжение задней поверхности бедра.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st"><strong>Подъём — таз вперёд,</strong> не тяни спиной. Сожми ягодицы наверху.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Критично</div>
+              <div class="err">Округление поясницы — прямой путь к грыже. Уменьши амплитуду или вес.</div>
+              <div class="err">Сгибание коленей при опускании — это уже приседание, не тяга.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Бицепс бедра</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Ягодицы</span><div class="mtrack"><div class="mfill" style="width:90%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Разгибатели спины</span><div class="mtrack"><div class="mfill" style="width:65%"></div></div><span class="mtype">стаб.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">05</span>
+        <span class="ex-head">
+          <span class="ex-title">Армейский жим стоя (плечи)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Передняя дельта</span>
+            <span class="chip hi">Средняя дельта</span>
+            <span class="chip">Трицепс</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Штанга на уровне верхней груди. Хват чуть шире плеч. Локти чуть впереди грифа.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Жим строго вертикально. <strong>Голова слегка назад</strong> — пропускаешь штангу мимо лица, затем голова вперёд.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Ягодицы и пресс напряжены. Не прогибайся в пояснице.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Наверху — штанга над затылком, не над лицом. Полное разгибание.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Передняя дельта</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Средняя дельта</span><div class="mtrack"><div class="mfill" style="width:75%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Трицепс</span><div class="mtrack"><div class="mfill" style="width:65%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Верх трапеции</span><div class="mtrack"><div class="mfill" style="width:45%"></div></div><span class="mtype">вторичная</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ ГАНТЕЛИ ═══ -->
+<section class="sec" id="dumbbells">
+  <div class="sec-intro">
+    <div class="sec-num">05</div>
+    <div class="sec-right">
+      <h2><mark>Гантели</mark></h2>
+      <div class="sec-sub">каждая рука отдельно · выявляет дисбаланс</div>
+    </div>
+  </div>
+
+  <div class="exercises">
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">01</span>
+        <span class="ex-head">
+          <span class="ex-title">Молотки (Hammer Curl)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Плечевая мышца</span>
+            <span class="chip hi">Бицепс</span>
+            <span class="chip">Предплечье</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Нейтральный хват</strong> — ладони друг к другу. Гантели как молотки вдоль тела.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Локти прижаты к корпусу, не двигаются. Только предплечья.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">В верхней точке — большой палец назад, сожми плечевую мышцу.</span></li>
+            </ul>
+            <div class="tip">Молотки vs обычные сгибания: обычные — пик бицепса. Молотки — толщина и ширина руки. Делай оба.</div>
+          </div>
+          <div>
+            <div class="col-head">Мышцы (отличие от обычных)</div>
+            <div class="mrow"><span class="mname">Brachialis (плечевая)</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">+++ больше</span></div>
+            <div class="mrow"><span class="mname">Бицепс</span><div class="mtrack"><div class="mfill" style="width:75%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Предплечье</span><div class="mtrack"><div class="mfill" style="width:60%"></div></div><span class="mtype">вторичная</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">02</span>
+        <span class="ex-head">
+          <span class="ex-title">Разведения стоя (средняя дельта)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Средняя дельта</span>
+            <span class="chip">Плечи шире</span>
+            <span class="chip">Лёгкий вес!</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Нейтральный хват, гантели у бёдер. Лёгкий наклон корпуса 5–10°.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Руки в стороны до уровня плеч. Локти слегка согнуты и <strong>направлены вверх.</strong></span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Мизинец выше большого</strong> — как выливаешь воду из стакана. Максимум средней дельты.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Медленно опускай 3 сек.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Главная ошибка</div>
+              <div class="err">Слишком тяжёлый вес — трапеция и инерция. 5–10 кг достаточно для большинства.</div>
+              <div class="err">Читинг раскачкой — сядь на стул.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Почему лёгкий вес</div>
+            <p style="font-size:13px;line-height:1.75;color:var(--gray)">Средняя дельта — маленькая мышца. С тяжёлым весом её всегда крадёт трапеция и передняя дельта. Техника здесь важнее веса особенно сильно.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">03</span>
+        <span class="ex-head">
+          <span class="ex-title">Жим гантелей лёжа (грудь)</span>
+          <span class="ex-chips">
+            <span class="chip hi">Грудь</span>
+            <span class="chip">Трицепс</span>
+            <span class="chip">На полу</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника на полу</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Лёжа на полу, колени согнуты. Гантели у груди, <strong>локти касаются пола</strong> — естественный ограничитель.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Нейтральный хват (ладони друг к другу) — мягче для плеч.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Выжимай вверх и чуть вовнутрь. Наверху — гантели почти касаются.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Мышцы</div>
+            <div class="mrow"><span class="mname">Большая грудная</span><div class="mtrack"><div class="mfill" style="width:100%"></div></div><span class="mtype">главная</span></div>
+            <div class="mrow"><span class="mname">Трицепс</span><div class="mtrack"><div class="mfill" style="width:65%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="mrow"><span class="mname">Передняя дельта</span><div class="mtrack"><div class="mfill" style="width:55%"></div></div><span class="mtype">вторичная</span></div>
+            <div class="tip">Гантели лучше штанги: каждая рука независима, нет ограничения по амплитуде, сразу видно дисбаланс.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">04</span>
+        <span class="ex-head">
+          <span class="ex-title">Гоблет-присед + болгарский</span>
+          <span class="ex-chips">
+            <span class="chip hi">Квадрицепс</span>
+            <span class="chip hi">Ягодицы</span>
+            <span class="chip">Базовое</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Гоблет-присед (1 гантель)</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Держишь гантель вертикально у груди двумя руками — как кубок.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Ноги чуть шире плеч, носки наружу 15–30°.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Таз вниз и назад. Колени за носками — не внутрь. <strong>Пятки на полу всегда.</strong></span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">До параллели бёдер. Толкай пол пятками при подъёме.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Ошибки</div>
+              <div class="err">Колени внутрь — слабые ягодицы. Толкай колени наружу сознательно.</div>
+              <div class="err">Отрыв пяток — подложи что-нибудь под пятки.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Болгарский присед (сложнее)</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Задняя нога — на кровати или стуле. Передняя далеко впереди.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Опускай заднее колено к полу. Корпус прямой.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Одно из лучших упражнений для ног без станка — нестабильность делает его тяжелее. Добавь гантели когда освоишь.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ БЕЗ ЖЕЛЕЗА ═══ -->
+<section class="sec" id="bw">
+  <div class="sec-intro">
+    <div class="sec-num">06</div>
+    <div class="sec-right">
+      <h2><mark>Без железа</mark></h2>
+      <div class="sec-sub">отжимания · приседания · выпады · берпи</div>
+    </div>
+  </div>
+
+  <div class="exercises">
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">01</span>
+        <span class="ex-head">
+          <span class="ex-title">Отжимания — техника и 5 вариантов</span>
+          <span class="ex-chips">
+            <span class="chip hi">Грудь</span>
+            <span class="chip hi">Трицепс</span>
+            <span class="chip">Передняя дельта</span>
+            <span class="chip">Кор</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Базовая техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Руки:</strong> чуть шире плеч, пальцы вперёд. Кисти под плечами.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Тело — прямая доска.</strong> Ягодицы и пресс напряжены. Без провисания, без горба.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Грудь к полу</strong> — не нос, не живот. Локти под <strong>углом 45°</strong> к корпусу — не 90°!</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st">Грудь почти касается пола — 1–2 см. Пауза. Выжимай.</span></li>
+            </ul>
+            <div class="errs">
+              <div class="errs-h">Ошибки</div>
+              <div class="err">Локти строго в стороны под 90° — перегрузка плечевых суставов. Угол 45° — правильно.</div>
+              <div class="err">Провисание живота — напряги пресс как перед ударом.</div>
+              <div class="err">Неполная амплитуда — грудь должна касаться пола.</div>
+            </div>
+          </div>
+          <div>
+            <div class="col-head">Варианты</div>
+            <div class="vars">
+              <div class="var"><div class="var-t">Широкие — акцент грудь</div><div class="var-d">Руки шире плеч. Локти больше в стороны.</div></div>
+              <div class="var"><div class="var-t">Узкие / Алмаз — трицепс</div><div class="var-d">Пальцы образуют ромб. Локти вдоль тела.</div></div>
+              <div class="var"><div class="var-t">Ноги выше — верхняя грудь</div><div class="var-d">Ноги на кровати. Верхняя грудь и дельты.</div></div>
+              <div class="var"><div class="var-t">Взрывные / хлопок</div><div class="var-d">Руки отрываются от пола. Взрывная сила.</div></div>
+              <div class="var"><div class="var-t">С колен — для начинающих</div><div class="var-d">~60% нагрузки. Освоение техники.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">02</span>
+        <span class="ex-head">
+          <span class="ex-title">Приседания без веса + прогрессия</span>
+          <span class="ex-chips">
+            <span class="chip hi">Квадрицепс</span>
+            <span class="chip hi">Ягодицы</span>
+            <span class="chip">Суставы</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Ноги чуть шире плеч, носки наружу. Руки вперёд.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Таз назад и вниз — как на стул. <strong>Грудь смотрит вперёд, не вниз.</strong></span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Колени за носками, не внутрь. Пятки на полу. Минимум — параллель бёдер.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Прогрессия</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">→</span><span class="st"><strong>Присед-прыжок:</strong> из нижней точки взрывной прыжок. Кардио + ноги.</span></li>
+              <li class="step"><span class="sn">→</span><span class="st"><strong>Присед у стены:</strong> 90° — статическая нагрузка на квадрицепс.</span></li>
+              <li class="step"><span class="sn">→</span><span class="st"><strong>Пистолет (1 нога):</strong> другая прямая вперёд. Элитный уровень. Цель.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">03</span>
+        <span class="ex-head">
+          <span class="ex-title">Выпады вперёд / болгарский присед</span>
+          <span class="ex-chips">
+            <span class="chip hi">Квадрицепс</span>
+            <span class="chip hi">Ягодицы</span>
+            <span class="chip">Баланс</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Выпад вперёд</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Большой шаг вперёд. <strong>Корпус вертикален</strong> — не наклоняется.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Заднее колено к полу (не касаясь). Переднее — над пяткой.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Толкаешься передней ногой и возвращаешься. Или ходячие выпады.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Болгарский (нога на кровати)</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Задняя нога на кровати. Передняя далеко впереди.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Заднее колено вниз. Корпус прямой или чуть вперёд (ягодицы).</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Тяжелее из-за нестабильности. Добавь гантели для прогрессии.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">04</span>
+        <span class="ex-head">
+          <span class="ex-title">Берпи — всё тело за 8 минут</span>
+          <span class="ex-chips">
+            <span class="chip hi">Всё тело</span>
+            <span class="chip hi">Кардио</span>
+            <span class="chip">Жиросжигание</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">5 фаз берпи</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st"><strong>Присед</strong> — руки на пол.</span></li>
+              <li class="step"><span class="sn">2.</span><span class="st"><strong>Прыжок в упор</strong> — ноги назад, тело прямое.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st"><strong>Отжимание</strong> — опционально, но добавляет силовой компонент.</span></li>
+              <li class="step"><span class="sn">4.</span><span class="st"><strong>Прыжок к рукам</strong> — ноги возвращаются.</span></li>
+              <li class="step"><span class="sn">5.</span><span class="st"><strong>Прыжок вверх</strong> — руки над головой.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Как использовать</div>
+            <p style="font-size:13px;line-height:1.75;color:var(--gray)">30 сек берпи + 30 сек отдых × 8 раундов = 8 минут. Интенсивнее трусцы.<br><br>Финал тренировки или отдельный кардио-день.<br><br>Для начинающих: убери прыжки — шагай в упор и обратно.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <button class="ex-trigger" onclick="tog(this)">
+        <span class="ex-n">05</span>
+        <span class="ex-head">
+          <span class="ex-title">Pike Push-up — плечи без штанги</span>
+          <span class="ex-chips">
+            <span class="chip hi">Плечи</span>
+            <span class="chip">Трицепс</span>
+            <span class="chip">К стойке на руках</span>
+          </span>
+        </span>
+        <span class="ex-arrow">+</span>
+      </button>
+      <div class="ex-body">
+        <div class="cols">
+          <div>
+            <div class="col-head">Техника</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">1.</span><span class="st">Как отжимание, но таз высоко — тело образует <strong>перевёрнутую V.</strong></span></li>
+              <li class="step"><span class="sn">2.</span><span class="st">Сгибай локти — голова опускается к полу между руками. Локти 45° к корпусу.</span></li>
+              <li class="step"><span class="sn">3.</span><span class="st">Чем вертикальнее тело — тем больше плечи. Это вертикальный жим без штанги.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-head">Прогрессия</div>
+            <ul class="steps">
+              <li class="step"><span class="sn">→</span><span class="st">С пола → ноги на кровати (угол круче) → стойка у стены.</span></li>
+              <li class="step"><span class="sn">→</span><span class="st">Строит силу плеч для стойки на руках без единого кг железа.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<footer>
+  <div class="ft-l"><em>Домашний</em><br><strong>Зал</strong></div>
+  <div class="ft-r">
+    Техника важнее веса — всегда<br>
+    Полная амплитуда · медленный негатив · дыхание<br>
+    DHFitLife · EZ-штанга · гантели · тело
+  </div>
+</footer>
+
+<script>
+function tog(btn){
+  const ex = btn.closest('.ex');
+  ex.classList.toggle('open');
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape')
+    document.querySelectorAll('.ex.open').forEach(x => x.classList.remove('open'));
+});
+</script>
+</body>
+</html>
